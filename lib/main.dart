@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter_clone/responsive/desktop_layout.dart';
 import 'package:instagram_flutter_clone/responsive/mobile_layout.dart';
@@ -7,9 +8,16 @@ import 'package:instagram_flutter_clone/responsive/tablet_layout.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
 
 void main() async {
-  // ensure widgets initialized
+  // check if using web
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if (kIsWeb) {
+    // firebase Options
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+            apiKey: '', appId: '', messagingSenderId: '', projectId: ''));
+  } else {
+    await Firebase.initializeApp();
+  }
   runApp(const MyApp());
 }
 
