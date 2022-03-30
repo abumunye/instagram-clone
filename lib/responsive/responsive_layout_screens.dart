@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:instagram_flutter_clone/utils/constants.dart';
 
 class ResponsiveLayoutScreens extends StatelessWidget {
-  final Widget desktopLayout;
+  final Widget webLayout;
   final Widget mobileLayout;
-  final Widget tabletLayout;
+  Widget? tabletLayout;
 
-  const ResponsiveLayoutScreens({
+  ResponsiveLayoutScreens({
     Key? key,
-    required this.desktopLayout,
+    required this.webLayout,
     required this.mobileLayout,
-    required this.tabletLayout,
+    this.tabletLayout,
   }) : super(key: key);
 
   @override
@@ -18,10 +18,10 @@ class ResponsiveLayoutScreens extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > desktopScreenSize) {
-          return desktopLayout;
+          return webLayout;
         } else if (constraints.maxWidth > tabletScreenSize &&
             constraints.maxWidth < desktopScreenSize) {
-          return tabletLayout;
+          return tabletLayout ?? webLayout;
         } else {
           return mobileLayout;
         }
