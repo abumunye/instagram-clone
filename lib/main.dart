@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_flutter_clone/responsive/desktop_layout.dart';
+import 'package:instagram_flutter_clone/responsive/mobile_layout.dart';
+import 'package:instagram_flutter_clone/responsive/responsive_layout_screens.dart';
+import 'package:instagram_flutter_clone/responsive/tablet_layout.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
 
 void main() {
@@ -15,10 +19,10 @@ class MyApp extends StatelessWidget {
       title: "Instagram Clone",
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      home: Scaffold(
-        body: Center(
-          child: Text('Test'),
-        ),
+      home: const ResponsiveLayoutScreens(
+        mobileLayout: MobileLayout(),
+        tabletLayout: TabletLayout(),
+        desktopLayout: DesktopLayout(),
       ),
     );
   }
