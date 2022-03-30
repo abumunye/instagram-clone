@@ -6,6 +6,7 @@ import 'package:instagram_flutter_clone/responsive/mobile_layout.dart';
 import 'package:instagram_flutter_clone/responsive/responsive_layout_screens.dart';
 import 'package:instagram_flutter_clone/responsive/tablet_layout.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
+import 'package:instagram_flutter_clone/utils/firebase_web_credentials.dart';
 
 void main() async {
   // check if using web
@@ -14,7 +15,12 @@ void main() async {
     // firebase Options
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-            apiKey: '', appId: '', messagingSenderId: '', projectId: ''));
+      apiKey: apiKey,
+      appId: appId,
+      messagingSenderId: messagingSenderId,
+      projectId: projectId,
+      storageBucket: storageBucket,
+    ));
   } else {
     await Firebase.initializeApp();
   }
