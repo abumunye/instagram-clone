@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_flutter_clone/pages/login.dart';
 import 'package:instagram_flutter_clone/responsive/desktop_layout.dart';
 import 'package:instagram_flutter_clone/responsive/mobile_layout.dart';
 import 'package:instagram_flutter_clone/responsive/responsive_layout_screens.dart';
@@ -9,10 +10,9 @@ import 'package:instagram_flutter_clone/utils/colors.dart';
 import 'package:instagram_flutter_clone/utils/firebase_web_credentials.dart';
 
 void main() async {
-  // check if using web
   WidgetsFlutterBinding.ensureInitialized();
+
   if (kIsWeb) {
-    // firebase Options
     await Firebase.initializeApp(
         options: const FirebaseOptions(
       apiKey: apiKey,
@@ -24,6 +24,7 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
+
   runApp(const MyApp());
 }
 
@@ -37,10 +38,7 @@ class MyApp extends StatelessWidget {
       title: "Instagram Clone",
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      home: ResponsiveLayoutScreens(
-        mobileLayout: MobileLayout(),
-        webLayout: WebLayout(),
-      ),
+      home: const Login(),
     );
   }
 }
