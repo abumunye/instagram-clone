@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter_clone/pages/login.dart';
+import 'package:instagram_flutter_clone/pages/signup.dart';
 import 'package:instagram_flutter_clone/responsive/desktop_layout.dart';
 import 'package:instagram_flutter_clone/responsive/mobile_layout.dart';
 import 'package:instagram_flutter_clone/responsive/responsive_layout_screens.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       title: "Instagram Clone",
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      home: const Login(),
+      home: const SignUp(),
     );
   }
 }
