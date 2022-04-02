@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+
 import "package:flutter/material.dart";
+import 'package:image_picker/image_picker.dart';
+import 'package:instagram_flutter_clone/services/auth_service.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
 
+import '../utils/utils.dart';
 import '../widgets/text_input.dart';
 
 class SignUp extends StatefulWidget {
@@ -15,12 +20,33 @@ class _SignUpState extends State<SignUp> {
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
   final _bioController = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
     super.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
+    _emailController.dispose();
+    _bioController.dispose();
+  }
+
+  void _selectImage() async {
+    var image = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void _signUpUser() async {
+    final res = await AuthService.signUpUser(
+      username: _usernameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      bio: _bioController.text,
+      file: _image!,
+    );
+    debugPrint("Sign up result: $res");
   }
 
   @override
@@ -42,23 +68,31 @@ class _SignUpState extends State<SignUp> {
                     color: primaryColor,
                   ),
                 ),
+                const SizedBox(height: 50),
                 Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 64,
-                      // backgroundColor: Colors.grey,
-                      backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1604311359386-efa1bbcf3353?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"),
-                    ),
+                    _image == null
+                        ? const CircleAvatar(
+                            radius: 64,
+                            backgroundImage: NetworkImage(
+                                "https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg"),
+                          )
+                        : CircleAvatar(
+                            radius: 64,
+                            backgroundImage:
+                                MemoryImage(_image ?? Uint8List(0)),
+                          ),
                     Positioned(
                         bottom: -10,
                         right: 10,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _selectImage();
+                            },
                             icon: const Icon(Icons.add_a_photo)))
                   ],
                 ),
-                const SizedBox(height: 100),
+                const SizedBox(height: 60),
                 TextInput(
                   hint: "Enter your username",
                   controller: _usernameController,
@@ -87,12 +121,11 @@ class _SignUpState extends State<SignUp> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Expanded(
                       child: GestureDetector(
-                    onTap: () => debugPrint("Sign up"),
+                    onTap: _signUpUser,
                     child: Container(
                       child: const Text("Sign up"),
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(12),
-                      // give this container a rounded border
                       decoration: ShapeDecoration(
                         color: blueColor,
                         shape: RoundedRectangleBorder(
