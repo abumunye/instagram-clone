@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
+import 'package:instagram_flutter_clone/services/auth_service.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
+import 'package:instagram_flutter_clone/utils/utils.dart';
 
 import '../widgets/text_input.dart';
 
@@ -11,14 +13,25 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     _passwordController.dispose();
-    _usernameController.dispose();
+    _emailController.dispose();
+  }
+
+  void _logInUser() async {
+    String res = await AuthService.logInUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    if (res == "success") {
+    } else {
+      showSnackbar(res, context);
+    }
   }
 
   @override
@@ -42,8 +55,8 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 100),
                 TextInput(
-                  hint: "username",
-                  controller: _usernameController,
+                  hint: "email",
+                  controller: _emailController,
                   textInputType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 24),
@@ -57,7 +70,7 @@ class _LoginState extends State<Login> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () => debugPrint("Log in"),
+                      onTap: _logInUser,
                       child: Container(
                         child: const Text("Log in"),
                         alignment: Alignment.center,

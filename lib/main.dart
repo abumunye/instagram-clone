@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       title: "Instagram Clone",
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      home: const SignUp(),
+      home: const Login(),
     );
   }
 }

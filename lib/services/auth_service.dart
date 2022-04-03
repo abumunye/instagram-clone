@@ -55,4 +55,24 @@ class AuthService {
     }
     return result;
   }
+
+  // log in
+  static Future<String> logInUser({
+    required String email,
+    required String password,
+  }) async {
+    String result = "error";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        result = "success";
+      } else {
+        result = "please enter email and password";
+      }
+    } catch (err) {
+      result = err.toString();
+    }
+    return result;
+  }
 }

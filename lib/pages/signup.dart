@@ -21,7 +21,7 @@ class _SignUpState extends State<SignUp> {
   final _emailController = TextEditingController();
   final _bioController = TextEditingController();
   Uint8List? _image;
-
+  bool _isLoading = false;
   @override
   void dispose() {
     super.dispose();
@@ -39,14 +39,24 @@ class _SignUpState extends State<SignUp> {
   }
 
   void _signUpUser() async {
-    final res = await AuthService.signUpUser(
+    setState(() => _isLoading = true);
+    if (_image == null) {
+      showSnackbar("Please select an image", context);
+      setState(() => _isLoading = false);
+      return;
+    }
+    final result = await AuthService.signUpUser(
       username: _usernameController.text,
       email: _emailController.text,
       password: _passwordController.text,
       bio: _bioController.text,
       file: _image!,
     );
-    debugPrint("Sign up result: $res");
+    debugPrint(result);
+    if (result != "success") {
+      showSnackbar(result, context);
+    }
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -122,19 +132,28 @@ class _SignUpState extends State<SignUp> {
                   Expanded(
                       child: GestureDetector(
                     onTap: _signUpUser,
-                    child: Container(
-                      child: const Text("Sign up"),
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(12),
-                      decoration: ShapeDecoration(
-                        color: blueColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
+                    child: SizedBox(
+                      height: 50,
+                      child: Container(
+                        child: _isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: primaryColor,
+                                ),
+                              )
+                            : const Text("Sign up"),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(12),
+                        decoration: ShapeDecoration(
+                          color: blueColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
                         ),
                       ),
                     ),
                   )),
-                ])
+                ]),
               ],
             )),
       ),
