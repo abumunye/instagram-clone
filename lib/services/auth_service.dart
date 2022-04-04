@@ -47,6 +47,7 @@ class AuthService {
           'followers': [],
           'following': [],
           'photoUrl': photoUrl,
+          'email': email,
         });
         result = "success";
       }
