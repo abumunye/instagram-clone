@@ -2,9 +2,12 @@ import 'dart:typed_data';
 
 import "package:flutter/material.dart";
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_flutter_clone/responsive/responsive_layout_screens.dart';
 import 'package:instagram_flutter_clone/services/auth_service.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
 
+import '../responsive/mobile_layout.dart';
+import '../responsive/web_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/text_input.dart';
 
@@ -56,7 +59,12 @@ class _SignUpState extends State<SignUp> {
       showSnackbar(result, context);
     } else {
       showSnackbar("Successfully created account", context);
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) => ResponsiveLayoutScreens(
+                webLayout: const WebLayout(),
+                mobileLayout: const MobileLayout())),
+      );
     }
     setState(() => _isLoading = false);
   }

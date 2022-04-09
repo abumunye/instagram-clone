@@ -3,6 +3,9 @@ import 'package:instagram_flutter_clone/services/auth_service.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
 import 'package:instagram_flutter_clone/utils/utils.dart';
 
+import '../responsive/mobile_layout.dart';
+import '../responsive/responsive_layout_screens.dart';
+import '../responsive/web_layout.dart';
 import '../widgets/text_input.dart';
 import 'signup.dart';
 
@@ -30,6 +33,12 @@ class _LoginState extends State<Login> {
       password: _passwordController.text,
     );
     if (res == "success") {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) => ResponsiveLayoutScreens(
+                webLayout: const WebLayout(),
+                mobileLayout: const MobileLayout())),
+      );
     } else {
       showSnackbar(res, context);
     }
