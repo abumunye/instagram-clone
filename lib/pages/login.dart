@@ -4,6 +4,7 @@ import 'package:instagram_flutter_clone/utils/colors.dart';
 import 'package:instagram_flutter_clone/utils/utils.dart';
 
 import '../widgets/text_input.dart';
+import 'signup.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -32,6 +33,14 @@ class _LoginState extends State<Login> {
     } else {
       showSnackbar(res, context);
     }
+  }
+
+  void _navigateToSignUp() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SignUp(),
+      ),
+    );
   }
 
   @override
@@ -88,7 +97,7 @@ class _LoginState extends State<Login> {
                   const SizedBox(width: 8),
                   Expanded(
                       child: GestureDetector(
-                    onTap: () => debugPrint("Sign up"),
+                    onTap: () => _navigateToSignUp(),
                     child: Container(
                       child: const Text("Sign up"),
                       alignment: Alignment.center,

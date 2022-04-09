@@ -52,9 +52,11 @@ class _SignUpState extends State<SignUp> {
       bio: _bioController.text,
       file: _image!,
     );
-    debugPrint(result);
     if (result != "success") {
       showSnackbar(result, context);
+    } else {
+      showSnackbar("Successfully created account", context);
+      Navigator.of(context).pop();
     }
     setState(() => _isLoading = false);
   }
