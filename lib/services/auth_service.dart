@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import "package:flutter/material.dart";
 import 'package:instagram_flutter_clone/models/user.dart' as model;
 import 'package:instagram_flutter_clone/services/storage_service.dart';
 
@@ -17,6 +16,15 @@ class AuthService {
   }
 
   AuthService._internal();
+
+  static Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromDocument(snap);
+  }
 
   static Future<String> signUpUser(
       {required String email,
@@ -45,7 +53,6 @@ class AuthService {
           email: email,
           followers: [],
           following: [],
-          password: password,
         );
 
         await _firestore

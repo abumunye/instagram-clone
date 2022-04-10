@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import "package:flutter/material.dart";
 import 'package:image_picker/image_picker.dart';
-import 'package:instagram_flutter_clone/responsive/responsive_layout_screens.dart';
+import 'package:instagram_flutter_clone/responsive/responsive_layouts.dart';
 import 'package:instagram_flutter_clone/services/auth_service.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
 

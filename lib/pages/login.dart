@@ -4,7 +4,7 @@ import 'package:instagram_flutter_clone/utils/colors.dart';
 import 'package:instagram_flutter_clone/utils/utils.dart';
 
 import '../responsive/mobile_layout.dart';
-import '../responsive/responsive_layout_screens.dart';
+import '../responsive/responsive_layouts.dart';
 import '../responsive/web_layout.dart';
 import '../widgets/text_input.dart';
 import 'signup.dart';
