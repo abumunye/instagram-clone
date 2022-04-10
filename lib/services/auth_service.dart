@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import "package:flutter/material.dart";
+import 'package:instagram_flutter_clone/models/user.dart' as model;
 import 'package:instagram_flutter_clone/services/storage_service.dart';
 
 class AuthService {
@@ -34,21 +34,24 @@ class AuthService {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        debugPrint("uid: ${cred.user!.uid}");
-
         var photoUrl = await StorageService.uploadImage(
             "profile_pics", cred.user!.uid, file, false);
 
-        await _firestore.collection('users').doc(cred.user!.uid).set({
-          'uid': cred.user!.uid,
-          'username': username,
-          'bio': bio,
-          'password': password,
-          'followers': [],
-          'following': [],
-          'photoUrl': photoUrl,
-          'email': email,
-        });
+        final user = model.User(
+          uid: cred.user!.uid,
+          username: username,
+          bio: bio,
+          photoUrl: photoUrl,
+          email: email,
+          followers: [],
+          following: [],
+          password: password,
+        );
+
+        await _firestore
+            .collection('users')
+            .doc(cred.user!.uid)
+            .set(user.toJson());
         result = "success";
       }
     } catch (err) {
@@ -57,7 +60,6 @@ class AuthService {
     return result;
   }
 
-  // log in
   static Future<String> logInUser({
     required String email,
     required String password,
