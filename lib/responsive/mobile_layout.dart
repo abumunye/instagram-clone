@@ -16,14 +16,25 @@ class MobileLayout extends StatefulWidget {
 
 class _MobileLayoutState extends State<MobileLayout> {
   int _currentIndex = 0;
+  late PageController _pageController;
 
-  _onTappedIcon(int index) {
-    if (index == 3) {
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  _onTappedIcon(int page) {
+    if (page == 4) {
       _logOutUser();
     }
-    setState(() {
-      _currentIndex = index;
-    });
+    _pageController.jumpToPage(page);
   }
 
   _logOutUser() async {
@@ -32,21 +43,37 @@ class _MobileLayoutState extends State<MobileLayout> {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => Login()));
     } else {
-      debugPrint(res);
       showSnackbar(res, context);
     }
   }
 
+  _onPageChanged(int page) {
+    setState(() {
+      _currentIndex = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<UserProvider>(context).getUser;
+    var user = Provider.of<UserProvider>(context, listen: false).getUser;
     return Scaffold(
-      body: Center(child: Text(user.username)),
+      body: Center(
+          child: PageView(
+        children: [
+          const Text("home"),
+          const Text("search"),
+          const Text("add"),
+          const Text("notifications"),
+        ],
+        physics: NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+      )),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: mobileBackgroundColor,
           currentIndex: _currentIndex,
-          // selectedItemColor: primaryColor,
+          selectedItemColor: primaryColor,
           onTap: _onTappedIcon,
           items: [
             BottomNavigationBarItem(
@@ -60,11 +87,15 @@ class _MobileLayoutState extends State<MobileLayout> {
               backgroundColor: primaryColor,
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle),
+              label: "Photo",
+              backgroundColor: primaryColor,
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: "Profile",
               backgroundColor: primaryColor,
             ),
-            // log out bottom navigation bar item
             BottomNavigationBarItem(
               icon: Icon(Icons.exit_to_app),
               label: "Log Out",

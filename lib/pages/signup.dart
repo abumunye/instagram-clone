@@ -44,11 +44,7 @@ class _SignUpState extends State<SignUp> {
 
   void _signUpUser() async {
     setState(() => _isLoading = true);
-    // if (_image == null) {
-    //   showSnackbar("Please select an image", context);
-    //   setState(() => _isLoading = false);
-    //   return;
-    // }
+
     final result = await AuthService.signUpUser(
       username: _usernameController.text,
       email: _emailController.text,
@@ -56,6 +52,7 @@ class _SignUpState extends State<SignUp> {
       bio: _bioController.text,
       file: _image,
     );
+
     if (result != "success") {
       showSnackbar(result, context);
     } else {
