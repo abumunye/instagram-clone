@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter_clone/services/auth_service.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
+import 'package:instagram_flutter_clone/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 import '../pages/login.dart';
@@ -59,12 +60,7 @@ class _MobileLayoutState extends State<MobileLayout> {
     return Scaffold(
       body: Center(
           child: PageView(
-        children: [
-          const Text("home"),
-          const Text("search"),
-          const Text("add"),
-          const Text("notifications"),
-        ],
+        children: [...homeScreenItems],
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: _onPageChanged,
