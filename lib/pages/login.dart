@@ -58,60 +58,41 @@ class _LoginState extends State<Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 100),
-                  const Text(
-                    "Instagram",
-                    style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                    ),
+        child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 100),
+                const Text(
+                  "Instagram",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor,
                   ),
-                  const SizedBox(height: 100),
-                  TextInput(
-                    hint: "email",
-                    controller: _emailController,
-                    textInputType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 24),
-                  TextInput(
-                    hint: "password",
-                    isPass: true,
-                    controller: _passwordController,
-                    textInputType: TextInputType.visiblePassword,
-                  ),
-                  const SizedBox(height: 24),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: _logInUser,
-                        child: Container(
-                          child: const Text("Log in"),
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(12),
-                          // give this container a rounded border
-                          decoration: ShapeDecoration(
-                            color: blueColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                        child: GestureDetector(
-                      onTap: () => _navigateToSignUp(),
+                ),
+                const SizedBox(height: 100),
+                TextInput(
+                  hint: "email",
+                  controller: _emailController,
+                  textInputType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 24),
+                TextInput(
+                  hint: "password",
+                  isPass: true,
+                  controller: _passwordController,
+                  textInputType: TextInputType.visiblePassword,
+                ),
+                const SizedBox(height: 24),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: _logInUser,
                       child: Container(
-                        child: const Text("Sign up"),
+                        child: const Text("Log in"),
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(12),
                         // give this container a rounded border
@@ -122,11 +103,28 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                    )),
-                  ])
-                ],
-              )),
-        ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () => _navigateToSignUp(),
+                    child: Container(
+                      child: const Text("Sign up"),
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(12),
+                      // give this container a rounded border
+                      decoration: ShapeDecoration(
+                        color: blueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  )),
+                ])
+              ],
+            )),
       ),
     );
   }

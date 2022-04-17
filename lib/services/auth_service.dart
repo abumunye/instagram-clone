@@ -85,4 +85,15 @@ class AuthService {
     }
     return result;
   }
+
+  static Future<String> logOutUser() async {
+    String result = "error";
+    try {
+      await _auth.signOut();
+      result = "success";
+    } catch (err) {
+      result = err.toString();
+    }
+    return result;
+  }
 }

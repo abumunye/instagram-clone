@@ -11,6 +11,8 @@ import 'package:instagram_flutter_clone/utils/colors.dart';
 import 'package:instagram_flutter_clone/utils/firebase_web_credentials.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -24,7 +26,9 @@ void main() async {
       storageBucket: storageBucket,
     ));
   } else {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 
   runApp(const MyApp());
