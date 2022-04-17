@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter_clone/services/auth_service.dart';
 import 'package:instagram_flutter_clone/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../pages/login.dart';
+import '../providers/user_providers.dart';
 import '../utils/utils.dart';
 
 class MobileLayout extends StatefulWidget {
@@ -37,8 +39,9 @@ class _MobileLayoutState extends State<MobileLayout> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      body: Center(child: Text("sdasd")),
+      body: Center(child: Text(user.username)),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: mobileBackgroundColor,

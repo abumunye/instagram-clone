@@ -25,6 +25,7 @@ class _SignUpState extends State<SignUp> {
   final _bioController = TextEditingController();
   Uint8List? _image;
   bool _isLoading = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -43,17 +44,17 @@ class _SignUpState extends State<SignUp> {
 
   void _signUpUser() async {
     setState(() => _isLoading = true);
-    if (_image == null) {
-      showSnackbar("Please select an image", context);
-      setState(() => _isLoading = false);
-      return;
-    }
+    // if (_image == null) {
+    //   showSnackbar("Please select an image", context);
+    //   setState(() => _isLoading = false);
+    //   return;
+    // }
     final result = await AuthService.signUpUser(
       username: _usernameController.text,
       email: _emailController.text,
       password: _passwordController.text,
       bio: _bioController.text,
-      file: _image!,
+      file: _image,
     );
     if (result != "success") {
       showSnackbar(result, context);
@@ -73,99 +74,101 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 100),
-                const Text(
-                  "Instagram",
-                  style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
+        child: SingleChildScrollView(
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 100),
+                  const Text(
+                    "Instagram",
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 50),
-                Stack(
-                  children: [
-                    _image == null
-                        ? const CircleAvatar(
-                            radius: 64,
-                            backgroundImage: NetworkImage(
-                                "https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg"),
-                          )
-                        : CircleAvatar(
-                            radius: 64,
-                            backgroundImage:
-                                MemoryImage(_image ?? Uint8List(0)),
-                          ),
-                    Positioned(
-                        bottom: -10,
-                        right: 10,
-                        child: IconButton(
-                            onPressed: () {
-                              _selectImage();
-                            },
-                            icon: const Icon(Icons.add_a_photo)))
-                  ],
-                ),
-                const SizedBox(height: 60),
-                TextInput(
-                  hint: "Enter your username",
-                  controller: _usernameController,
-                  textInputType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 24),
-                TextInput(
-                  hint: "Enter your email",
-                  controller: _emailController,
-                  textInputType: TextInputType.visiblePassword,
-                ),
-                const SizedBox(height: 24),
-                TextInput(
-                  hint: "Enter your password",
-                  isPass: true,
-                  controller: _passwordController,
-                  textInputType: TextInputType.visiblePassword,
-                ),
-                const SizedBox(height: 24),
-                TextInput(
-                  hint: "Enter your bio",
-                  controller: _bioController,
-                  textInputType: TextInputType.visiblePassword,
-                ),
-                const SizedBox(height: 24),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Expanded(
-                      child: GestureDetector(
-                    onTap: _signUpUser,
-                    child: SizedBox(
-                      height: 50,
-                      child: Container(
-                        child: _isLoading
-                            ? const Center(
-                                child: CircularProgressIndicator(
-                                  color: primaryColor,
-                                ),
-                              )
-                            : const Text("Sign up"),
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(12),
-                        decoration: ShapeDecoration(
-                          color: blueColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
+                  const SizedBox(height: 50),
+                  Stack(
+                    children: [
+                      _image == null
+                          ? const CircleAvatar(
+                              radius: 64,
+                              backgroundImage: NetworkImage(
+                                  "https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg"),
+                            )
+                          : CircleAvatar(
+                              radius: 64,
+                              backgroundImage:
+                                  MemoryImage(_image ?? Uint8List(0)),
+                            ),
+                      Positioned(
+                          bottom: -10,
+                          right: 10,
+                          child: IconButton(
+                              onPressed: () {
+                                _selectImage();
+                              },
+                              icon: const Icon(Icons.add_a_photo)))
+                    ],
+                  ),
+                  const SizedBox(height: 60),
+                  TextInput(
+                    hint: "Enter your username",
+                    controller: _usernameController,
+                    textInputType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 24),
+                  TextInput(
+                    hint: "Enter your email",
+                    controller: _emailController,
+                    textInputType: TextInputType.visiblePassword,
+                  ),
+                  const SizedBox(height: 24),
+                  TextInput(
+                    hint: "Enter your password",
+                    isPass: true,
+                    controller: _passwordController,
+                    textInputType: TextInputType.visiblePassword,
+                  ),
+                  const SizedBox(height: 24),
+                  TextInput(
+                    hint: "Enter your bio",
+                    controller: _bioController,
+                    textInputType: TextInputType.visiblePassword,
+                  ),
+                  const SizedBox(height: 24),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Expanded(
+                        child: GestureDetector(
+                      onTap: _signUpUser,
+                      child: SizedBox(
+                        height: 50,
+                        child: Container(
+                          child: _isLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                    color: primaryColor,
+                                  ),
+                                )
+                              : const Text("Sign up"),
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(12),
+                          decoration: ShapeDecoration(
+                            color: blueColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )),
-                ]),
-              ],
-            )),
+                    )),
+                  ]),
+                ],
+              )),
+        ),
       ),
     );
   }

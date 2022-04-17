@@ -31,19 +31,22 @@ class AuthService {
       required String password,
       required String username,
       required String bio,
-      required Uint8List file}) async {
+      Uint8List? file}) async {
     String result = "error";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           username.isNotEmpty ||
-          bio.isNotEmpty ||
-          file != null) {
+          bio.isNotEmpty) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        var photoUrl = await StorageService.uploadImage(
-            "profile_pics", cred.user!.uid, file, false);
+        var photoUrl = "";
+
+        if (file != null) {
+          photoUrl = await StorageService.uploadImage(
+              "profile_pics", cred.user!.uid, file, false);
+        }
 
         final user = model.User(
           uid: cred.user!.uid,
